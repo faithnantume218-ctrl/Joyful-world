@@ -1,0 +1,6 @@
+{
+  "name": "Kids Learning & Stories",
+  "description": "A vibrant and friendly educational website for kids featuring illustrated moral stories, simple school notes, and fun interactive quizzes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
