@@ -30,9 +30,29 @@ const COVER_PRESETS = [
     url: '/src/assets/images/story_lion_firefly_1791877819142.jpg'
   },
   {
+    id: 'lion-roar',
+    label: 'Lion Cub Roar',
+    url: '/src/assets/images/scene_lion_twilight_roar_1791880632860.jpg'
+  },
+  {
+    id: 'firefly-flower',
+    label: 'Singing Firefly',
+    url: '/src/assets/images/scene_firefly_glowing_flower_1791880671434.jpg'
+  },
+  {
     id: 'rabbit-meadow',
     label: 'Rabbit & Friends',
     url: '/src/assets/images/story_curious_rabbit_1791278890075.jpg'
+  },
+  {
+    id: 'carrot-patch',
+    label: 'Carrot Patch',
+    url: '/src/assets/images/scene_rabbit_carrot_patch_1791880044515.jpg'
+  },
+  {
+    id: 'sharing-picnic',
+    label: 'Friends Picnic',
+    url: '/src/assets/images/scene_animals_sharing_picnic_1791880044283.jpg'
   },
   {
     id: 'brave-star',
@@ -40,9 +60,29 @@ const COVER_PRESETS = [
     url: '/src/assets/images/story_brave_little_star_1791278901368.jpg'
   },
   {
+    id: 'bear-cub',
+    label: 'Bear & Star',
+    url: '/src/assets/images/scene_lost_bear_cub_1791880046331.jpg'
+  },
+  {
     id: 'clockwork-fox',
     label: 'Owl & Fox',
     url: '/src/assets/images/story_clever_fox_clock_1791278916748.jpg'
+  },
+  {
+    id: 'clockwork-gears',
+    label: 'Clockwork Gears',
+    url: '/src/assets/images/scene_clock_tree_gears_1791880046299.jpg'
+  },
+  {
+    id: 'sunflower-garden',
+    label: 'Giant Sunflower',
+    url: '/src/assets/images/scene_maya_giant_sunflower_1791880712529.jpg'
+  },
+  {
+    id: 'honest-bridge',
+    label: 'Sturdy River Bridge',
+    url: '/src/assets/images/scene_bridge_sturdy_river_1791880750635.jpg'
   },
   {
     id: 'adventure-notes',
@@ -55,6 +95,7 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ selectedStory, onSelec
   const [filterAge, setFilterAge] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [isReadingAloud, setIsReadingAloud] = useState<boolean>(false);
+  const [readingParagraphIndex, setReadingParagraphIndex] = useState<number | null>(null);
   const [fontSize, setFontSize] = useState<'normal' | 'large' | 'xlarge'>('normal');
   const [readStories, setReadStories] = useState<string[]>([]);
   const [favoriteStories, setFavoriteStories] = useState<string[]>([]);
@@ -102,6 +143,7 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ selectedStory, onSelec
     if (isReadingAloud) {
       window.speechSynthesis.cancel();
       setIsReadingAloud(false);
+      setReadingParagraphIndex(null);
       return;
     }
 
@@ -123,11 +165,32 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ selectedStory, onSelec
     setIsReadingAloud(true);
   };
 
+  const handleReadParagraph = (text: string, index: number) => {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    setIsReadingAloud(false);
+
+    if (readingParagraphIndex === index) {
+      setReadingParagraphIndex(null);
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 0.9;
+    utterance.pitch = 1.05;
+    utterance.onend = () => setReadingParagraphIndex(null);
+    utterance.onerror = () => setReadingParagraphIndex(null);
+
+    setReadingParagraphIndex(index);
+    window.speechSynthesis.speak(utterance);
+  };
+
   const handleStopReadAloud = () => {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
     }
     setIsReadingAloud(false);
+    setReadingParagraphIndex(null);
   };
 
   const toggleFavorite = (storyId: string, e: React.MouseEvent) => {
@@ -167,6 +230,13 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ selectedStory, onSelec
       .map((q) => q.trim())
       .filter((q) => q.length > 0);
 
+    // Give each paragraph its own picture from available presets
+    const chosenBaseImage = customImageUrl.trim() || selectedCover;
+    const assignedParagraphImages = paragraphs.map((_, i) => {
+      if (i === 0) return chosenBaseImage;
+      return COVER_PRESETS[i % COVER_PRESETS.length].url;
+    });
+
     const createdStory: Story = {
       id: `custom-${Date.now()}`,
       title: newTitle.trim(),
@@ -175,8 +245,9 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ selectedStory, onSelec
       category: newCategory,
       readTime: `${Math.max(2, Math.round(newContent.split(' ').length / 80))} min read`,
       summary: newSummary.trim() || paragraphs[0]?.slice(0, 140) + '...',
-      image: customImageUrl.trim() || selectedCover,
+      image: chosenBaseImage,
       content: paragraphs.length > 0 ? paragraphs : [newContent.trim()],
+      paragraphImages: assignedParagraphImages,
       moral: newMoral.trim(),
       characters: charactersList.length > 0 ? charactersList : ['Main Character'],
       discussionQuestions:
@@ -259,17 +330,17 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ selectedStory, onSelec
     return matchesAge && matchesSearch;
   });
 
-  // If a story is selected, show the full story reader view
+  // If a story is selected, show the full illustrated picture book story reader view
   if (selectedStory) {
     const isFav = favoriteStories.includes(selectedStory.id);
     const isCompleted = readStories.includes(selectedStory.id);
 
     const textSizeClass =
       fontSize === 'xlarge'
-        ? 'text-2xl sm:text-3xl leading-relaxed'
-        : fontSize === 'large'
         ? 'text-xl sm:text-2xl leading-relaxed'
-        : 'text-lg sm:text-xl leading-relaxed';
+        : fontSize === 'large'
+        ? 'text-lg sm:text-xl leading-relaxed'
+        : 'text-base sm:text-lg leading-relaxed';
 
     return (
       <div className="max-w-4xl mx-auto space-y-8 pb-16">
@@ -311,7 +382,7 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ selectedStory, onSelec
               </button>
             </div>
 
-            {/* Read Aloud Button */}
+            {/* Read Aloud All Story Button */}
             <button
               onClick={() => handleStartReadAloud(selectedStory)}
               className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl text-sm font-kids font-bold transition-all shadow-xs cursor-pointer btn-bubbly ${
@@ -328,9 +399,22 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ selectedStory, onSelec
               ) : (
                 <>
                   <Volume2 className="w-5 h-5" />
-                  <span>Listen Aloud 🔊</span>
+                  <span>Listen Whole Story 🔊</span>
                 </>
               )}
+            </button>
+
+            {/* Quick Add Story button from inside reader */}
+            <button
+              onClick={() => {
+                playClickPop();
+                setIsAddModalOpen(true);
+              }}
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-2xl text-sm font-kids font-bold bg-gradient-to-r from-pink-500 to-rose-500 text-white border-2 border-rose-600/30 btn-bubbly cursor-pointer"
+              title="Add a new story"
+            >
+              <PenTool className="w-4 h-4" />
+              <span>+ Add a Story ✍️</span>
             </button>
 
             {/* Custom story delete button */}
@@ -347,46 +431,31 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ selectedStory, onSelec
         </div>
 
         {/* Story Article Presentation */}
-        <article className="bg-white rounded-3xl p-6 sm:p-12 border-4 border-amber-300 shadow-[0_8px_0_rgba(245,158,11,0.15)] space-y-8">
-          {/* Cover Illustration */}
-          <div className="relative rounded-3xl overflow-hidden border-4 border-amber-200 shadow-xl aspect-16/9 max-h-96">
-            <img
-              src={selectedStory.image}
-              alt={selectedStory.title}
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute top-4 right-4 flex items-center gap-2">
+        <article className="bg-white rounded-3xl p-6 sm:p-10 border-4 border-amber-300 shadow-[0_8px_0_rgba(245,158,11,0.15)] space-y-10">
+          {/* Header Metadata & Title */}
+          <div className="space-y-4 border-b-2 border-amber-100 pb-6">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm font-kids font-bold">
+                <span className="bg-amber-200 px-3 py-1 rounded-xl text-amber-950">{selectedStory.ageGroup}</span>
+                <span>·</span>
+                <span className="bg-rose-200 px-3 py-1 rounded-xl text-rose-950">{selectedStory.category}</span>
+                <span>·</span>
+                <span className="bg-sky-200 px-3 py-1 rounded-xl text-sky-950">⏱️ {selectedStory.readTime}</span>
+                {selectedStory.author && (
+                  <>
+                    <span>·</span>
+                    <span className="bg-purple-200 px-3 py-1 rounded-xl text-purple-950">✍️ {selectedStory.author}</span>
+                  </>
+                )}
+              </div>
+
               <button
                 onClick={(e) => toggleFavorite(selectedStory.id, e)}
-                className="p-3 rounded-full bg-white/95 backdrop-blur-xs text-rose-500 hover:bg-white shadow-md transition-transform active:scale-95 cursor-pointer"
+                className="p-2.5 rounded-full bg-rose-50 border-2 border-rose-200 text-rose-500 hover:bg-rose-100 transition-all cursor-pointer shadow-xs"
                 title={isFav ? 'Remove from favorites' : 'Add to favorites'}
               >
-                <Heart className={`w-6 h-6 ${isFav ? 'fill-rose-500' : ''}`} />
+                <Heart className={`w-5 h-5 ${isFav ? 'fill-rose-500' : ''}`} />
               </button>
-            </div>
-            {selectedStory.isCustom && (
-              <div className="absolute bottom-4 left-4 bg-purple-500 text-white px-4 py-1.5 rounded-xl text-xs sm:text-sm font-kids font-bold shadow-md flex items-center gap-2">
-                <Sparkles className="w-4 h-4" />
-                <span>Custom Created Story ✨</span>
-              </div>
-            )}
-          </div>
-
-          {/* Metadata & Title */}
-          <div className="space-y-3">
-            <div className="flex flex-wrap items-center gap-2.5 text-xs sm:text-sm font-kids font-bold">
-              <span className="bg-amber-200 px-3 py-1 rounded-xl text-amber-950">{selectedStory.ageGroup}</span>
-              <span>·</span>
-              <span className="bg-rose-200 px-3 py-1 rounded-xl text-rose-950">{selectedStory.category}</span>
-              <span>·</span>
-              <span className="bg-sky-200 px-3 py-1 rounded-xl text-sky-950">⏱️ {selectedStory.readTime}</span>
-              {selectedStory.author && (
-                <>
-                  <span>·</span>
-                  <span className="bg-purple-200 px-3 py-1 rounded-xl text-purple-950">✍️ {selectedStory.author}</span>
-                </>
-              )}
             </div>
 
             <h1 className="text-3xl sm:text-5xl font-kids font-black text-slate-900 tracking-tight leading-snug">
@@ -395,7 +464,7 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ selectedStory, onSelec
 
             {/* Character badges */}
             <div className="flex flex-wrap items-center gap-2 pt-1">
-              <span className="text-sm font-kids font-bold text-slate-600">Characters:</span>
+              <span className="text-sm font-kids font-bold text-slate-600">Characters in this tale:</span>
               {selectedStory.characters.map((char, i) => (
                 <span
                   key={i}
@@ -407,13 +476,123 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ selectedStory, onSelec
             </div>
           </div>
 
-          {/* Story Body Paragraphs with Extra-Legible Warm Typography */}
-          <div className={`space-y-6 text-slate-800 font-body font-semibold ${textSizeClass}`}>
-            {selectedStory.content.map((paragraph, index) => (
-              <p key={index} className="leading-relaxed indent-2 sm:indent-4">
-                {paragraph}
-              </p>
-            ))}
+          {/* ========================================================= */}
+          {/* ILLUSTRATED STORY PARAGRAPHS: EACH PARAGRAPH HAS A PICTURE */}
+          {/* ========================================================= */}
+          <div className="space-y-10">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-amber-950 font-kids font-black text-xl sm:text-2xl">
+                <span className="text-2xl animate-bounce">🎨</span>
+                <span>Illustrated Story Scenes</span>
+              </div>
+              <span className="text-xs sm:text-sm font-kids font-black text-amber-900 bg-amber-200 px-3.5 py-1.5 rounded-xl border-2 border-amber-400 shadow-xs">
+                🖼️ Every Paragraph Has a Picture! ({selectedStory.content.length} Scenes)
+              </span>
+            </div>
+
+            <div className="space-y-10">
+              {selectedStory.content.map((paragraph, index) => {
+                // Picture specifically for this paragraph
+                const paragraphImg =
+                  selectedStory.paragraphImages?.[index] ||
+                  selectedStory.paragraphImages?.[index % (selectedStory.paragraphImages?.length || 1)] ||
+                  selectedStory.image;
+
+                const themeStyles = [
+                  {
+                    bg: 'bg-gradient-to-br from-amber-50 via-yellow-50/50 to-orange-50/40 border-amber-300',
+                    ring: 'ring-amber-300',
+                    sticker: 'bg-amber-300 text-amber-950 border-amber-400',
+                    badge: 'bg-amber-200 text-amber-950 border-amber-300',
+                    btn: 'bg-white hover:bg-amber-100 text-amber-950 border-amber-300',
+                    icon: '🎨'
+                  },
+                  {
+                    bg: 'bg-gradient-to-br from-rose-50 via-pink-50/50 to-red-50/40 border-rose-300',
+                    ring: 'ring-rose-300',
+                    sticker: 'bg-rose-300 text-rose-950 border-rose-400',
+                    badge: 'bg-rose-200 text-rose-950 border-rose-300',
+                    btn: 'bg-white hover:bg-rose-100 text-rose-950 border-rose-300',
+                    icon: '🌸'
+                  },
+                  {
+                    bg: 'bg-gradient-to-br from-sky-50 via-cyan-50/50 to-blue-50/40 border-sky-300',
+                    ring: 'ring-sky-300',
+                    sticker: 'bg-sky-300 text-sky-950 border-sky-400',
+                    badge: 'bg-sky-200 text-sky-950 border-sky-300',
+                    btn: 'bg-white hover:bg-sky-100 text-sky-950 border-sky-300',
+                    icon: '🌊'
+                  },
+                  {
+                    bg: 'bg-gradient-to-br from-emerald-50 via-teal-50/50 to-green-50/40 border-emerald-300',
+                    ring: 'ring-emerald-300',
+                    sticker: 'bg-emerald-300 text-emerald-950 border-emerald-400',
+                    badge: 'bg-emerald-200 text-emerald-950 border-emerald-300',
+                    btn: 'bg-white hover:bg-emerald-100 text-emerald-950 border-emerald-400',
+                    icon: '🍀'
+                  }
+                ];
+
+                const currentTheme = themeStyles[index % themeStyles.length];
+                const isEven = index % 2 === 0;
+                const isCurrentlyPlaying = readingParagraphIndex === index;
+
+                return (
+                  <section
+                    key={index}
+                    className={`rounded-3xl p-6 sm:p-8 border-4 transition-all card-bubbly ${currentTheme.bg} ${
+                      isCurrentlyPlaying
+                        ? `ring-4 ${currentTheme.ring} shadow-lg scale-101`
+                        : ''
+                    }`}
+                  >
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                      {/* Picture for this paragraph */}
+                      <div className={`lg:col-span-5 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
+                        <div className="relative rounded-2xl overflow-hidden border-4 border-white shadow-xl aspect-4/3 group bg-amber-100">
+                          <img
+                            src={paragraphImg}
+                            alt={`Picture for Scene ${index + 1}: ${selectedStory.title}`}
+                            referrerPolicy="no-referrer"
+                            className="w-full h-full object-cover group-hover:scale-106 transition-transform duration-300"
+                          />
+                          <div className={`absolute top-3 left-3 backdrop-blur-xs font-kids font-black text-xs px-3.5 py-1.5 rounded-xl shadow-md border-2 ${currentTheme.sticker}`}>
+                            {currentTheme.icon} Scene {index + 1} Picture
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Paragraph Text for this picture */}
+                      <div className={`lg:col-span-7 space-y-4 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
+                        <div className="flex items-center justify-between">
+                          <span className={`text-xs font-kids font-bold px-3 py-1 rounded-xl border-2 ${currentTheme.badge}`}>
+                            📖 Page {index + 1} of {selectedStory.content.length}
+                          </span>
+
+                          {/* Individual Listen Aloud Button for this paragraph */}
+                          <button
+                            onClick={() => handleReadParagraph(paragraph, index)}
+                            className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-kids font-bold transition-all cursor-pointer btn-bubbly ${
+                              isCurrentlyPlaying
+                                ? 'bg-rose-500 text-white animate-pulse'
+                                : currentTheme.btn
+                            }`}
+                            title="Listen to this scene"
+                          >
+                            <Volume2 className="w-4 h-4 text-amber-700" />
+                            <span>{isCurrentlyPlaying ? 'Reading Part...' : 'Listen to this part 🔊'}</span>
+                          </button>
+                        </div>
+
+                        <p className={`font-kids font-medium text-slate-800 leading-relaxed ${textSizeClass}`}>
+                          {paragraph}
+                        </p>
+                      </div>
+                    </div>
+                  </section>
+                );
+              })}
+            </div>
           </div>
 
           {/* Moral Lesson Banner */}
@@ -481,13 +660,13 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ selectedStory, onSelec
       <div className="text-center max-w-2xl mx-auto space-y-3">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-200 border-2 border-rose-300 text-rose-950 text-xs sm:text-sm font-kids font-bold shadow-xs">
           <BookOpen className="w-4 h-4 text-rose-700" />
-          <span>Magical Tales &amp; Classroom Adventures for Ages 6–12 🌈</span>
+          <span>Every Story Scene Illustrated with Pictures! 🎨📖</span>
         </div>
         <h1 className="text-4xl sm:text-5xl font-kids font-black text-slate-900 leading-tight">
-          Illustrated Moral Stories 📖
+          Illustrated Picture Stories 🖼️
         </h1>
         <p className="text-base sm:text-lg text-slate-700 font-body font-semibold">
-          Discover wonderful stories about kind animals, clever inventors, and brave children. Every story ends with an inspiring moral lesson!
+          Every paragraph is paired with its own picture scene! Read along, listen to each scene, and learn great moral lessons.
         </p>
 
         {/* Action Button: Add A Story */}
@@ -497,10 +676,11 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ selectedStory, onSelec
               playClickPop();
               setIsAddModalOpen(true);
             }}
-            className="inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white font-kids font-black text-base rounded-2xl border-2 border-rose-600/30 btn-bubbly cursor-pointer"
+            className="inline-flex items-center gap-2.5 px-8 py-4 bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white font-kids font-black text-lg rounded-2xl border-3 border-rose-600/40 shadow-lg btn-bubbly cursor-pointer transform hover:scale-104 transition-all"
           >
-            <PlusCircle className="w-5 h-5 animate-spin" />
-            <span>+ Write / Add Your Own Story ✨</span>
+            <Sparkles className="w-6 h-6 text-yellow-200 animate-pulse" />
+            <span>+ Write / Add Your Story! ✍️</span>
+            <span className="bg-white/20 px-2 py-0.5 rounded-lg text-xs font-bold">New</span>
           </button>
         </div>
       </div>
@@ -598,7 +778,7 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ selectedStory, onSelec
                       className="p-2 rounded-full bg-white/95 backdrop-blur-xs text-rose-500 hover:bg-white shadow-sm transition-transform active:scale-90 cursor-pointer"
                       title={isFav ? 'Remove favorite' : 'Add favorite'}
                     >
-                      <Heart className={`w-5 h-5 ${isFav ? 'fill-rose-500' : ''}`} />
+                      <Heart className={`w-4 h-4 ${isFav ? 'fill-rose-500' : ''}`} />
                     </button>
                   </div>
 
@@ -615,6 +795,10 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ selectedStory, onSelec
                       <span>Custom ✨</span>
                     </div>
                   )}
+
+                  <div className="absolute bottom-3 left-3 bg-white/90 text-amber-950 text-[11px] px-2.5 py-0.5 rounded-lg font-kids font-bold shadow-xs">
+                    🖼️ {story.content.length} Pictures
+                  </div>
                 </div>
 
                 {/* Card Content */}
@@ -649,7 +833,7 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ selectedStory, onSelec
                   </div>
 
                   <div className="pt-1 flex items-center justify-between text-sm font-kids font-black text-amber-600 group-hover:text-amber-700">
-                    <span>Read Full Story</span>
+                    <span>Read Picture Story ({story.content.length} Pics)</span>
                     <span className="text-lg">➔</span>
                   </div>
                 </div>
@@ -671,10 +855,10 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ selectedStory, onSelec
                 </div>
                 <div>
                   <h2 className="text-2xl font-kids font-black text-slate-900">
-                    Write Your Own Story! ✍️
+                    Write Your Own Illustrated Story! ✍️
                   </h2>
                   <p className="text-xs sm:text-sm font-body font-semibold text-slate-600">
-                    Share an inspiring tale for young minds with a moral lesson and cover art!
+                    Each paragraph will automatically receive a colorful story scene picture!
                   </p>
                 </div>
               </div>
@@ -779,9 +963,9 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ selectedStory, onSelec
               {/* Cover Art Preset Selection */}
               <div>
                 <label className="block text-xs font-kids font-bold text-slate-700 mb-1.5">
-                  Choose Cover Illustration Preset 🎨
+                  Choose Primary Cover Illustration Preset 🎨
                 </label>
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
+                <div className="grid grid-cols-3 sm:grid-cols-5 gap-2.5">
                   {COVER_PRESETS.map((preset) => {
                     const isSelected = selectedCover === preset.url && !customImageUrl;
                     return (
@@ -799,7 +983,7 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ selectedStory, onSelec
                         <img
                           src={preset.url}
                           alt={preset.label}
-                          className="w-full h-16 object-cover rounded-xl"
+                          className="w-full h-14 object-cover rounded-xl"
                         />
                         <p className="text-[11px] font-kids font-bold text-center text-slate-700 mt-1 truncate">
                           {preset.label}
@@ -825,7 +1009,7 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ selectedStory, onSelec
 
               <div>
                 <label className="block text-xs font-kids font-bold text-slate-700 mb-1">
-                  Full Story Content * (Leave a blank line between paragraphs)
+                  Full Story Content * (Leave a blank line between paragraphs — each gets its own picture!)
                 </label>
                 <textarea
                   rows={6}
@@ -879,7 +1063,7 @@ export const StoriesPage: React.FC<StoriesPageProps> = ({ selectedStory, onSelec
                   type="submit"
                   className="px-7 py-3 bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-white font-kids font-bold text-base rounded-2xl border-2 border-amber-600/30 btn-bubbly cursor-pointer"
                 >
-                  Publish Story ✨
+                  Publish Illustrated Story ✨
                 </button>
               </div>
             </form>

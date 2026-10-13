@@ -2,21 +2,25 @@
 
 @layer base {
   body {
-    font-family: 'Quicksand', 'Fredoka', system-ui, -apple-system, sans-serif;
-    font-weight: 600;
+    font-family: 'Fredoka', 'Quicksand', system-ui, -apple-system, sans-serif;
+    font-weight: 500;
     color: #334155;
-    background-color: #fffdf5;
+    background-color: #fffcf0;
     background-image: 
-      radial-gradient(#fed7aa 1.2px, transparent 1.2px), 
-      radial-gradient(#fbcfe8 1.2px, #fffdf5 1.2px);
-    background-size: 40px 40px;
-    background-position: 0 0, 20px 20px;
+      radial-gradient(#fed7aa 1.5px, transparent 1.5px), 
+      radial-gradient(#fbcfe8 1.5px, #fffcf0 1.5px);
+    background-size: 36px 36px;
+    background-position: 0 0, 18px 18px;
   }
 
   h1, h2, h3, h4, .font-kids {
-    font-family: 'Fredoka', 'Sniglet', cursive, system-ui, sans-serif;
+    font-family: 'Fredoka', 'Bubblegum Sans', 'Sniglet', cursive, system-ui, sans-serif;
     letter-spacing: -0.01em;
   }
+}
+
+.font-bubblegum {
+  font-family: 'Bubblegum Sans', 'Fredoka', cursive, sans-serif;
 }
 
 .font-sniglet {
@@ -24,7 +28,7 @@
 }
 
 .font-body {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Fredoka', 'Quicksand', sans-serif;
 }
 
 /* Playful bubbly buttons with tactile 3D bottom shadow */

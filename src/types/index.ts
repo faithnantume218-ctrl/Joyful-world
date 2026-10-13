@@ -9,6 +9,7 @@ export interface Story {
   summary: string;
   image: string;
   content: string[];
+  paragraphImages?: string[];
   moral: string;
   discussionQuestions: string[];
   characters: string[];

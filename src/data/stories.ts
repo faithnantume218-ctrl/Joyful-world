@@ -19,6 +19,15 @@ export const storiesData: Story[] = [
       'Spike’s round eyes sparkled. "For me? Thank you, Benny!" Then Benny called Ruby down from the oak branch and broke off fresh carrot tops for her nest. Soon, all three friends were laughing, sharing stories, and crunching together in the warm golden sunshine.',
       'Benny realized that the sweetest taste in the world wasn’t the carrot at all—it was the warm smile of a happy friend.'
     ],
+    paragraphImages: [
+      '/src/assets/images/story_curious_rabbit_1791278890075.jpg',
+      '/src/assets/images/scene_rabbit_carrot_patch_1791880044515.jpg',
+      '/src/assets/images/story_curious_rabbit_1791278890075.jpg',
+      '/src/assets/images/hero_kids_learning_1791278874175.jpg',
+      '/src/assets/images/scene_animals_sharing_picnic_1791880044283.jpg',
+      '/src/assets/images/scene_animals_sharing_picnic_1791880044283.jpg',
+      '/src/assets/images/story_curious_rabbit_1791278890075.jpg'
+    ],
     moral: 'Sharing what we have turns a lonely treat into a celebration of true friendship.',
     discussionQuestions: [
       'Why do you think Benny decided to share his carrots instead of burying them?',
@@ -43,6 +52,15 @@ export const storiesData: Story[] = [
       'Pip peeked through a small gap between two heavy storm clouds. He heard a tiny whimper from the ferns. Pip took a deep, steady breath, puffed up his golden rays, and leaned down as close as he could, shining a steady, comforting beam onto the forest path.',
       'Barnaby looked up, wiped away a teardrop, and saw the golden beam highlighting his mother’s paw prints leading safely back to the cozy cave.',
       'From that night on, Pip never wished to be a giant star again. He knew that even the smallest light can guide someone safely through the dark.'
+    ],
+    paragraphImages: [
+      '/src/assets/images/story_brave_little_star_1791278901368.jpg',
+      '/src/assets/images/story_brave_little_star_1791278901368.jpg',
+      '/src/assets/images/story_brave_little_star_1791278901368.jpg',
+      '/src/assets/images/scene_lost_bear_cub_1791880046331.jpg',
+      '/src/assets/images/scene_lost_bear_cub_1791880046331.jpg',
+      '/src/assets/images/scene_lost_bear_cub_1791880046331.jpg',
+      '/src/assets/images/story_brave_little_star_1791278901368.jpg'
     ],
     moral: 'No matter how small you feel, your kindness and unique gifts can make a huge difference to someone in need.',
     discussionQuestions: [
@@ -69,6 +87,15 @@ export const storiesData: Story[] = [
       'Working together, Oliver calculated the counterweights while Felix used his agile, slender paws to carefully clean the brass teeth and reset the tension wire.',
       'With a harmonious chime—DONG, DING, DONG!—the giant pendulum began to swing with steady grace. Felix turned to Oliver with a grin: "Your careful plan and my quick hands did together what neither of us could do alone."'
     ],
+    paragraphImages: [
+      '/src/assets/images/story_clever_fox_clock_1791278916748.jpg',
+      '/src/assets/images/scene_clock_tree_gears_1791880046299.jpg',
+      '/src/assets/images/story_clever_fox_clock_1791278916748.jpg',
+      '/src/assets/images/scene_clock_tree_gears_1791880046299.jpg',
+      '/src/assets/images/story_clever_fox_clock_1791278916748.jpg',
+      '/src/assets/images/scene_clock_tree_gears_1791880046299.jpg',
+      '/src/assets/images/story_clever_fox_clock_1791278916748.jpg'
+    ],
     moral: 'Combining fast action with patient planning leads to solving even the biggest problems.',
     discussionQuestions: [
       'What might have happened if Felix had rushed in without Oliver’s careful plan?',
@@ -83,7 +110,7 @@ export const storiesData: Story[] = [
     category: 'Perseverance & Science Curiosity',
     readTime: '5 min read',
     summary: 'When Maya’s school science seed refuses to sprout right away, she learns how patience, soil nutrients, and sunlight work together.',
-    image: '/src/assets/images/notes_school_adventure_1791278927538.jpg',
+    image: '/src/assets/images/scene_maya_giant_sunflower_1791880712529.jpg',
     characters: ['Maya', 'Mr. Henderson (Science Teacher)', 'Grandma Rosa'],
     content: [
       'For their fifth-grade science fair, Mr. Henderson gave each student a mystery seed in a small brown envelope. "Give it water, soil, and warmth, and record your observations in your science log," he instructed.',
@@ -93,6 +120,15 @@ export const storiesData: Story[] = [
       'Maya decided to test this scientifically. She investigated the soil moisture with her finger, added organic compost for nitrogen and potassium, and shifted the pot to catch six hours of morning sun.',
       'On day twelve, a tiny green loop broke through the soil crust. By week four, a sturdy green stalk was reaching skyward, crowned by a massive, golden sunflower with hundreds of geometric seed spirals following the sun from dawn till dusk.',
       'At the science fair, Maya won the Curiosity Ribbon—not just for having the tallest flower, but for keeping a detailed log proving that strong underground roots are the secret to reaching great heights.'
+    ],
+    paragraphImages: [
+      '/src/assets/images/notes_school_adventure_1791278927538.jpg',
+      '/src/assets/images/notes_school_adventure_1791278927538.jpg',
+      '/src/assets/images/notes_school_adventure_1791278927538.jpg',
+      '/src/assets/images/scene_rabbit_carrot_patch_1791880044515.jpg',
+      '/src/assets/images/notes_school_adventure_1791278927538.jpg',
+      '/src/assets/images/scene_maya_giant_sunflower_1791880712529.jpg',
+      '/src/assets/images/scene_maya_giant_sunflower_1791880712529.jpg'
     ],
     moral: 'Real growth takes time, care, and quiet dedication under the surface before the world sees your bloom.',
     discussionQuestions: [
@@ -108,7 +144,7 @@ export const storiesData: Story[] = [
     category: 'Honesty & Integrity',
     readTime: '4 min read',
     summary: 'Young apprentice Tariq chooses solid hardwood over quick painted pine, proving that integrity keeps everyone safe.',
-    image: '/src/assets/images/hero_kids_learning_1791278874175.jpg',
+    image: '/src/assets/images/scene_bridge_sturdy_river_1791880750635.jpg',
     characters: ['Tariq the Apprentice', 'Master Builder Caleb', 'Mayor Lin'],
     content: [
       'In the bustling mountain town of Riverbend, the annual harvest festival was approaching. Farmers needed a safe wooden footbridge to carry heavy carts of apples and wheat across the swift foaming river.',
@@ -118,6 +154,15 @@ export const storiesData: Story[] = [
       'He touched the bridge railing and looked down at the icy river below. He thought of the school children and elderly villagers who would walk across every morning. "I would know the difference," Tariq said firmly.',
       'He worked through the twilight with lantern light, carefully chiseling the dense, sturdy oak beams until each interlocking joint clicked securely into place.',
       'Two days later, an unexpected flash flood roared down the canyon with heavy logs battering the pylons. While surrounding fences washed away, the Riverbend bridge held completely firm, carrying every family safely home.'
+    ],
+    paragraphImages: [
+      '/src/assets/images/scene_bridge_sturdy_river_1791880750635.jpg',
+      '/src/assets/images/scene_clock_tree_gears_1791880046299.jpg',
+      '/src/assets/images/scene_clock_tree_gears_1791880046299.jpg',
+      '/src/assets/images/scene_clock_tree_gears_1791880046299.jpg',
+      '/src/assets/images/scene_bridge_sturdy_river_1791880750635.jpg',
+      '/src/assets/images/scene_bridge_sturdy_river_1791880750635.jpg',
+      '/src/assets/images/scene_bridge_sturdy_river_1791880750635.jpg'
     ],
     moral: 'Integrity is doing the right thing with great care, even when nobody is watching.',
     discussionQuestions: [
@@ -146,6 +191,17 @@ export const storiesData: Story[] = [
       'Leo lay so still that not even a single whisper of wind rustled his whiskers. He realized that if he had kept stomping around trying to roar loudly, he would have frightened Flick away and missed this magical song.',
       'When Flick finished his tune, the little firefly hovered over Leo’s nose and gave a tiny, cheerful sparkle. Leo smiled a warm, peaceful smile. He didn’t need to shout to feel proud—his quiet patience had welcomed a new friend.'
     ],
+    paragraphImages: [
+      '/src/assets/images/scene_lion_twilight_roar_1791880632860.jpg',
+      '/src/assets/images/scene_lion_twilight_roar_1791880632860.jpg',
+      '/src/assets/images/story_lion_firefly_1791877819142.jpg',
+      '/src/assets/images/story_lion_firefly_1791877819142.jpg',
+      '/src/assets/images/scene_firefly_glowing_flower_1791880671434.jpg',
+      '/src/assets/images/scene_firefly_glowing_flower_1791880671434.jpg',
+      '/src/assets/images/scene_firefly_glowing_flower_1791880671434.jpg',
+      '/src/assets/images/story_lion_firefly_1791877819142.jpg',
+      '/src/assets/images/scene_firefly_glowing_flower_1791880671434.jpg'
+    ],
     moral: 'You do not have to be the loudest in the room to be special. Quiet patience and gentle listening reveal the world’s most magical moments.',
     discussionQuestions: [
       'Why was Leo so frustrated at the beginning of the story?',
@@ -154,4 +210,3 @@ export const storiesData: Story[] = [
     ]
   }
 ];
-
