@@ -12,6 +12,8 @@ export interface Story {
   moral: string;
   discussionQuestions: string[];
   characters: string[];
+  isCustom?: boolean;
+  author?: string;
 }
 
 export interface PracticeQuestion {

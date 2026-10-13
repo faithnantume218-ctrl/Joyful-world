@@ -86,97 +86,97 @@ export const QuizPage: React.FC = () => {
 
     return (
       <div className="max-w-2xl mx-auto space-y-8 pb-16">
-        <div className="bg-white rounded-3xl p-8 sm:p-10 border border-amber-200 shadow-sm text-center space-y-6">
+        <div className="bg-gradient-to-br from-amber-100 via-orange-50 to-pink-100 rounded-3xl p-8 sm:p-12 border-4 border-amber-300 shadow-[0_8px_0_rgba(245,158,11,0.2)] text-center space-y-6">
           {/* Trophy badge */}
-          <div className="w-20 h-20 mx-auto rounded-3xl bg-amber-100 text-amber-600 flex items-center justify-center text-4xl shadow-inner animate-bounce">
+          <div className="w-24 h-24 mx-auto rounded-3xl bg-amber-300 border-4 border-amber-400 text-amber-950 flex items-center justify-center text-5xl shadow-md animate-bounce">
             🏆
           </div>
 
-          <div className="space-y-2">
-            <h1 className="text-3xl sm:text-4xl font-kids font-bold text-slate-900">
+          <div className="space-y-3">
+            <h1 className="text-4xl sm:text-5xl font-kids font-black text-slate-900">
               {encouragement.title}
             </h1>
-            <p className="text-base text-slate-600 max-w-md mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg font-body font-semibold text-slate-700 max-w-md mx-auto leading-relaxed">
               {encouragement.message}
             </p>
           </div>
 
           {/* Score card */}
-          <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto p-4 rounded-2xl bg-amber-50/80 border border-amber-200">
-            <div>
-              <p className="text-xs text-slate-500 font-semibold uppercase">Your Score</p>
-              <p className="text-3xl font-kids font-bold text-amber-700">
+          <div className="grid grid-cols-2 gap-4 max-w-sm mx-auto p-5 rounded-3xl bg-white/90 border-3 border-amber-300 shadow-sm">
+            <div className="space-y-1">
+              <p className="text-xs font-kids font-bold text-amber-800 uppercase tracking-wider">Your Score</p>
+              <p className="text-4xl font-kids font-black text-amber-600">
                 {score} / {questions.length}
               </p>
             </div>
-            <div>
-              <p className="text-xs text-slate-500 font-semibold uppercase">Accuracy</p>
-              <p className="text-3xl font-kids font-bold text-emerald-600">
+            <div className="space-y-1">
+              <p className="text-xs font-kids font-bold text-emerald-800 uppercase tracking-wider">Accuracy</p>
+              <p className="text-4xl font-kids font-black text-emerald-600">
                 {percentage}%
               </p>
             </div>
           </div>
 
           {/* Action buttons */}
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-4">
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-3">
             <button
               onClick={handleRestartQuiz}
-              className="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-kids font-bold text-sm rounded-xl shadow-xs transition-transform active:scale-95 flex items-center gap-2"
+              className="px-7 py-3.5 bg-gradient-to-r from-amber-400 to-orange-500 text-white font-kids font-bold text-base rounded-2xl border-2 border-amber-600/30 btn-bubbly flex items-center gap-2 cursor-pointer"
             >
-              <RefreshCw className="w-4 h-4" />
-              <span>Play Again</span>
+              <RefreshCw className="w-5 h-5" />
+              <span>Play Again! 🔄</span>
             </button>
 
             <button
               onClick={() => handleSubjectChange(selectedSubject === 'all' ? 'science' : 'all')}
-              className="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-kids font-bold text-sm rounded-xl transition-colors"
+              className="px-7 py-3.5 bg-white hover:bg-slate-50 text-slate-800 font-kids font-bold text-base rounded-2xl border-2 border-slate-300 btn-bubbly cursor-pointer"
             >
-              Try Another Subject
+              Try Another Subject 🎒
             </button>
           </div>
         </div>
 
         {/* Question Review Accordion */}
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-4">
-          <h2 className="text-xl font-kids font-bold text-slate-900 flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-amber-500" />
-            <span>Question Review</span>
+        <div className="bg-white rounded-3xl p-6 sm:p-8 border-4 border-amber-200 shadow-sm space-y-5">
+          <h2 className="text-2xl font-kids font-black text-slate-900 flex items-center gap-2">
+            <Sparkles className="w-6 h-6 text-amber-500" />
+            <span>Question Review 📝</span>
           </h2>
 
           <div className="space-y-4">
             {userAnswers.map((item, idx) => (
               <div
                 key={idx}
-                className={`p-4 rounded-2xl border ${
+                className={`p-5 rounded-2xl border-3 ${
                   item.correct
-                    ? 'bg-emerald-50/60 border-emerald-200'
-                    : 'bg-rose-50/60 border-rose-200'
+                    ? 'bg-emerald-50 border-emerald-300'
+                    : 'bg-rose-50 border-rose-300'
                 }`}
               >
                 <div className="flex items-start justify-between gap-3 mb-2">
-                  <p className="text-sm font-semibold text-slate-900">
-                    <span className="font-bold mr-1">Q{idx + 1}.</span> {item.question.question}
+                  <p className="text-base font-kids font-bold text-slate-900">
+                    <span className="font-black mr-1.5 text-amber-600">Q{idx + 1}.</span> {item.question.question}
                   </p>
                   {item.correct ? (
-                    <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full shrink-0">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Correct
+                    <span className="inline-flex items-center gap-1 text-xs font-kids font-bold text-emerald-800 bg-emerald-200 px-3 py-1 rounded-full shrink-0 border border-emerald-400">
+                      <CheckCircle2 className="w-4 h-4" /> Correct!
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 text-xs font-bold text-rose-700 bg-rose-100 px-2.5 py-0.5 rounded-full shrink-0">
-                      <XCircle className="w-3.5 h-3.5" /> Missed
+                    <span className="inline-flex items-center gap-1 text-xs font-kids font-bold text-rose-800 bg-rose-200 px-3 py-1 rounded-full shrink-0 border border-rose-400">
+                      <XCircle className="w-4 h-4" /> Missed
                     </span>
                   )}
                 </div>
 
-                <p className="text-xs text-slate-600 mb-1">
+                <p className="text-sm font-body text-slate-700 mb-1">
                   <strong>Your answer:</strong> {item.question.options[item.selected]}
                 </p>
                 {!item.correct && (
-                  <p className="text-xs text-emerald-700 font-semibold mb-1">
+                  <p className="text-sm font-body font-bold text-emerald-800 mb-1">
                     <strong>Correct answer:</strong> {item.question.options[item.question.correctIndex]}
                   </p>
                 )}
-                <p className="text-xs text-slate-700 bg-white/70 p-2.5 rounded-lg border border-slate-200/60">
+                <p className="text-sm font-body text-slate-800 bg-white/80 p-3 rounded-xl border border-slate-200 mt-2">
                   💡 {item.question.explanation}
                 </p>
               </div>
@@ -190,63 +190,66 @@ export const QuizPage: React.FC = () => {
   // ================= ACTIVE QUIZ SCREEN =================
   const progressPercent = Math.round(((currentIndex + 1) / questions.length) * 100);
 
+  const categoryThemes: Record<string, { label: string; activeStyle: string; icon: string }> = {
+    all: { label: 'All Subjects', activeStyle: 'bg-amber-400 text-amber-950 border-amber-500 shadow-sm scale-105', icon: '🎒' },
+    english: { label: 'English', activeStyle: 'bg-orange-400 text-orange-950 border-orange-500 shadow-sm scale-105', icon: '📖' },
+    mathematics: { label: 'Math', activeStyle: 'bg-sky-400 text-sky-950 border-sky-500 shadow-sm scale-105', icon: '🔢' },
+    science: { label: 'Science', activeStyle: 'bg-emerald-400 text-emerald-950 border-emerald-500 shadow-sm scale-105', icon: '🔬' },
+    'social-studies': { label: 'Social Studies', activeStyle: 'bg-purple-400 text-purple-950 border-purple-500 shadow-sm scale-105', icon: '🌍' },
+  };
+
   return (
     <div className="max-w-2xl mx-auto space-y-8 pb-16">
       {/* Header Banner */}
       <div className="text-center space-y-2">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-semibold">
-          <Trophy className="w-3.5 h-3.5 text-emerald-700" />
-          <span>Test Your Knowledge & Earn Super Explorer Stars</span>
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-200 border-2 border-emerald-300 text-emerald-950 text-xs sm:text-sm font-kids font-bold shadow-xs">
+          <Trophy className="w-4 h-4 text-emerald-700" />
+          <span>Test Your Knowledge &amp; Earn Super Explorer Stars! ⭐</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-kids font-bold text-slate-900">
-          Interactive Kids&apos; Quiz
+        <h1 className="text-4xl sm:text-5xl font-kids font-black text-slate-900">
+          Interactive Kids&apos; Quiz 🧠
         </h1>
-        <p className="text-sm text-slate-600">
-          Pick your favorite subject or try the All-Rounder challenge!
+        <p className="text-base font-body font-semibold text-slate-600">
+          Pick your favorite subject or challenge yourself with the All-Rounder!
         </p>
       </div>
 
       {/* Category Tabs */}
-      <div className="flex flex-wrap items-center justify-center gap-1.5 p-1 bg-white rounded-2xl border border-slate-200 shadow-2xs">
-        {[
-          { id: 'all', label: 'All Subjects' },
-          { id: 'english', label: 'English' },
-          { id: 'mathematics', label: 'Math' },
-          { id: 'science', label: 'Science' },
-          { id: 'social-studies', label: 'Social Studies' },
-        ].map((tab) => (
+      <div className="flex flex-wrap items-center justify-center gap-2 p-2 bg-white/90 backdrop-blur-xs rounded-2xl border-3 border-amber-300 shadow-xs">
+        {Object.entries(categoryThemes).map(([id, info]) => (
           <button
-            key={tab.id}
-            onClick={() => handleSubjectChange(tab.id)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors ${
-              selectedSubject === tab.id
-                ? 'bg-amber-500 text-white shadow-xs'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            key={id}
+            onClick={() => handleSubjectChange(id)}
+            className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-kids font-bold transition-all border-2 cursor-pointer btn-bubbly ${
+              selectedSubject === id
+                ? info.activeStyle
+                : 'bg-amber-50/70 border-amber-200 text-slate-700 hover:bg-amber-100'
             }`}
           >
-            {tab.label}
+            <span className="mr-1">{info.icon}</span>
+            <span>{info.label}</span>
           </button>
         ))}
       </div>
 
       {/* Quiz Card */}
-      <div className="bg-white rounded-3xl p-6 sm:p-10 border border-amber-200 shadow-sm space-y-6">
+      <div className="bg-white rounded-3xl p-6 sm:p-10 border-4 border-amber-300 shadow-[0_8px_0_rgba(245,158,11,0.15)] space-y-6">
         {/* Progress & Current Score */}
-        <div className="space-y-2">
-          <div className="flex items-center justify-between text-xs font-semibold text-slate-500">
-            <span className="flex items-center gap-1.5 text-amber-800">
-              <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
+        <div className="space-y-2.5">
+          <div className="flex items-center justify-between text-xs sm:text-sm font-kids font-bold text-slate-600">
+            <span className="flex items-center gap-2 text-amber-900">
+              <span className="w-3 h-3 rounded-full bg-amber-500 animate-ping" />
               Question {currentIndex + 1} of {questions.length}
             </span>
-            <span className="px-2.5 py-0.5 bg-amber-100 rounded-md text-amber-900 font-kids font-bold">
-              Score: {score}
+            <span className="px-3 py-1 bg-amber-200 border border-amber-300 rounded-xl text-amber-950 font-kids font-black">
+              ⭐ Score: {score}
             </span>
           </div>
 
-          {/* Progress bar */}
-          <div className="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+          {/* Rainbow Progress bar */}
+          <div className="w-full bg-amber-100 h-3.5 rounded-full overflow-hidden p-0.5 border border-amber-200">
             <div
-              className="bg-gradient-to-r from-amber-400 to-orange-500 h-full transition-all duration-300 rounded-full"
+              className="bg-gradient-to-r from-rose-400 via-amber-400 via-emerald-400 to-sky-400 h-full transition-all duration-300 rounded-full"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
@@ -254,27 +257,29 @@ export const QuizPage: React.FC = () => {
 
         {/* Question Area */}
         <div className="space-y-3">
-          <div className="inline-block px-2.5 py-1 rounded-md bg-sky-100 text-sky-800 text-xs font-bold">
+          <div className="inline-block px-3 py-1 rounded-xl bg-sky-100 border border-sky-300 text-sky-900 text-xs font-kids font-bold">
             {currentQ.subjectLabel}
           </div>
-          <h2 className="text-xl sm:text-2xl font-kids font-bold text-slate-900 leading-snug">
+          <h2 className="text-2xl sm:text-3xl font-kids font-black text-slate-900 leading-snug">
             {currentQ.question}
           </h2>
         </div>
 
         {/* Multiple Choice Options */}
-        <div className="space-y-3">
+        <div className="space-y-3.5">
           {currentQ.options.map((option, idx) => {
             const isSelected = selectedOption === idx;
             const isCorrect = idx === currentQ.correctIndex;
 
-            let buttonStyle = 'bg-slate-50 hover:bg-amber-50/70 border-slate-200 text-slate-800';
+            const letterColors = ['bg-orange-200 text-orange-950', 'bg-sky-200 text-sky-950', 'bg-emerald-200 text-emerald-950', 'bg-purple-200 text-purple-950'];
+
+            let buttonStyle = 'bg-amber-50/50 hover:bg-amber-100/80 border-amber-200 text-slate-800';
 
             if (hasAnswered) {
               if (isCorrect) {
-                buttonStyle = 'bg-emerald-600 text-white border-emerald-600 font-bold shadow-xs';
+                buttonStyle = 'bg-emerald-500 text-white border-emerald-600 font-black shadow-md';
               } else if (isSelected) {
-                buttonStyle = 'bg-rose-100 text-rose-900 border-rose-300';
+                buttonStyle = 'bg-rose-100 text-rose-950 border-rose-400 font-bold';
               } else {
                 buttonStyle = 'bg-slate-50 border-slate-200 text-slate-400 opacity-60';
               }
@@ -285,16 +290,16 @@ export const QuizPage: React.FC = () => {
                 key={idx}
                 disabled={hasAnswered}
                 onClick={() => handleSelectOption(idx)}
-                className={`w-full text-left p-4 rounded-2xl border-2 text-sm sm:text-base font-medium transition-all flex items-center justify-between ${buttonStyle}`}
+                className={`w-full text-left p-4 sm:p-5 rounded-2xl border-3 text-base sm:text-lg font-kids font-bold transition-all flex items-center justify-between cursor-pointer btn-bubbly ${buttonStyle}`}
               >
                 <div className="flex items-center gap-3">
                   <span
-                    className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold ${
+                    className={`w-9 h-9 rounded-xl flex items-center justify-center text-sm font-black border ${
                       hasAnswered && isCorrect
-                        ? 'bg-emerald-800 text-white'
+                        ? 'bg-emerald-800 text-white border-emerald-900'
                         : isSelected && !isCorrect
-                        ? 'bg-rose-200 text-rose-800'
-                        : 'bg-white text-slate-600 border border-slate-200'
+                        ? 'bg-rose-300 text-rose-950 border-rose-400'
+                        : letterColors[idx % 4]
                     }`}
                   >
                     {String.fromCharCode(65 + idx)}
@@ -303,10 +308,10 @@ export const QuizPage: React.FC = () => {
                 </div>
 
                 {hasAnswered && isCorrect && (
-                  <CheckCircle2 className="w-5 h-5 text-white" />
+                  <CheckCircle2 className="w-6 h-6 text-white shrink-0" />
                 )}
                 {hasAnswered && isSelected && !isCorrect && (
-                  <XCircle className="w-5 h-5 text-rose-600" />
+                  <XCircle className="w-6 h-6 text-rose-600 shrink-0" />
                 )}
               </button>
             );
@@ -321,13 +326,13 @@ export const QuizPage: React.FC = () => {
                 playClickPop();
                 setShowHint(!showHint);
               }}
-              className="text-xs text-amber-700 hover:text-amber-800 font-semibold flex items-center gap-1.5"
+              className="text-sm text-amber-800 hover:text-amber-950 font-kids font-bold flex items-center gap-1.5 cursor-pointer"
             >
-              <HelpCircle className="w-4 h-4" />
-              <span>{showHint ? 'Hide Hint' : 'Need a hint?'}</span>
+              <HelpCircle className="w-5 h-5 text-amber-600" />
+              <span>{showHint ? 'Hide Hint' : 'Need a friendly hint? 🔍'}</span>
             </button>
             {showHint && (
-              <p className="mt-2 text-xs text-amber-900 bg-amber-50 p-3 rounded-xl border border-amber-200 animate-fadeIn">
+              <p className="mt-2 text-sm font-body font-semibold text-amber-950 bg-amber-100/90 p-4 rounded-2xl border-2 border-amber-300 animate-fadeIn">
                 🔍 <strong>Hint:</strong> {currentQ.hint}
               </p>
             )}
@@ -337,23 +342,23 @@ export const QuizPage: React.FC = () => {
         {/* Instant Feedback Explanation Card */}
         {hasAnswered && (
           <div
-            className={`p-5 rounded-2xl border animate-fadeIn space-y-2 ${
+            className={`p-5 rounded-2xl border-3 animate-fadeIn space-y-2 ${
               selectedOption === currentQ.correctIndex
-                ? 'bg-emerald-50 border-emerald-200 text-emerald-950'
-                : 'bg-amber-50 border-amber-200 text-amber-950'
+                ? 'bg-emerald-100 border-emerald-300 text-emerald-950'
+                : 'bg-amber-100 border-amber-300 text-amber-950'
             }`}
           >
-            <div className="flex items-center gap-2 font-kids font-bold text-sm">
-              <span className="text-lg">
-                {selectedOption === currentQ.correctIndex ? '🎉 Fantastic!' : '💡 Good Try!'}
+            <div className="flex items-center gap-2 font-kids font-black text-lg">
+              <span className="text-2xl">
+                {selectedOption === currentQ.correctIndex ? '🎉 Fantastic Job!' : '💡 Good Try!'}
               </span>
               <span>
                 {selectedOption === currentQ.correctIndex
-                  ? 'You got it right!'
-                  : `The correct answer was: "${currentQ.options[currentQ.correctIndex]}"`}
+                  ? 'You got it 100% right!'
+                  : `The answer is: "${currentQ.options[currentQ.correctIndex]}"`}
               </span>
             </div>
-            <p className="text-xs sm:text-sm leading-relaxed text-slate-700">
+            <p className="text-base font-body font-semibold leading-relaxed">
               {currentQ.explanation}
             </p>
           </div>
@@ -361,13 +366,13 @@ export const QuizPage: React.FC = () => {
 
         {/* Next Question / Finish Button */}
         {hasAnswered && (
-          <div className="pt-2 flex justify-end">
+          <div className="pt-3 flex justify-end">
             <button
               onClick={handleNextQuestion}
-              className="px-6 py-3 bg-amber-500 hover:bg-amber-600 active:scale-95 text-white font-kids font-bold text-sm rounded-xl shadow-xs transition-all flex items-center gap-2"
+              className="px-7 py-3.5 bg-gradient-to-r from-amber-400 to-orange-500 text-white font-kids font-bold text-base rounded-2xl border-2 border-amber-600/30 btn-bubbly flex items-center gap-2 cursor-pointer"
             >
-              <span>{currentIndex + 1 < questions.length ? 'Next Question' : 'See Results'}</span>
-              <ArrowRight className="w-4 h-4" />
+              <span>{currentIndex + 1 < questions.length ? 'Next Question ➔' : 'See Results 🏆'}</span>
+              <ArrowRight className="w-5 h-5" />
             </button>
           </div>
         )}

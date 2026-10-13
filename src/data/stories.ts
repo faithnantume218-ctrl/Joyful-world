@@ -125,5 +125,33 @@ export const storiesData: Story[] = [
       'Why is honesty especially important in building things or doing teamwork?',
       'Can you think of a situation where choosing the honest path protected other people?'
     ]
+  },
+  {
+    id: 'leo-lion-firefly',
+    title: 'Leo the Lion Cub and the Singing Firefly',
+    ageGroup: 'Ages 6-8',
+    category: 'Listening & Patience',
+    readTime: '4 min read',
+    summary: 'Young Leo wanted to roar like the mighty kings of the savanna, but discovered that listening quietly to the smallest creature unlocks the greatest wonder.',
+    image: '/src/assets/images/story_lion_firefly_1791877819142.jpg',
+    characters: ['Leo the Lion Cub', 'Flick the Firefly', 'Mama Zuri'],
+    content: [
+      'Under the warm purple twilight of the Serengeti, little Leo puffed out his furry chest. He stood atop a smooth sunbaked boulder, took the deepest breath his little belly could hold, and let out his biggest roar: "SQUEAK!"',
+      'A herd of nearby zebras didn’t even twitch their striped ears. Leo sighed and slumped onto his front paws, letting his tail droop into the amber grass. "I will never be brave and mighty like the great lions," he grumbled.',
+      'His mother, Mama Zuri, nuzzled his forehead with her warm golden nose. "True strength does not come from making the loudest noise in the valley, little one. The wisest hunters and friends know when to be still and listen."',
+      'Leo frowned and rested his chin on the grass. As the sunset turned the sky into ribboning shades of peach and indigo, all the noisy day birds flew home to roost. The plains became quiet. Still as water.',
+      'Then, Leo heard it: a tiny, melodious hum like a silver bell. Ting-a-ling... zzz-hum...',
+      'Leo blinked and looked closely at a blue starlight flower swaying gently beside his paw. Perched upon the petals was Flick, a tiny firefly with wings of spun glass and a radiant abdomen glowing like a warm golden lantern.',
+      'Flick was singing a soft lullaby to guide the nocturnal bushbabies and sleepy meerkats safely through the darkening plains. Whenever Flick sang a gentle note, his little light pulsed with warm golden comfort.',
+      'Leo lay so still that not even a single whisper of wind rustled his whiskers. He realized that if he had kept stomping around trying to roar loudly, he would have frightened Flick away and missed this magical song.',
+      'When Flick finished his tune, the little firefly hovered over Leo’s nose and gave a tiny, cheerful sparkle. Leo smiled a warm, peaceful smile. He didn’t need to shout to feel proud—his quiet patience had welcomed a new friend.'
+    ],
+    moral: 'You do not have to be the loudest in the room to be special. Quiet patience and gentle listening reveal the world’s most magical moments.',
+    discussionQuestions: [
+      'Why was Leo so frustrated at the beginning of the story?',
+      'What did Leo discover when he stopped trying to roar and stayed quiet?',
+      'Can you think of a time when listening quietly helped you learn something new or help a friend?'
+    ]
   }
 ];
+

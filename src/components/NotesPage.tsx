@@ -11,11 +11,36 @@ export const NotesPage: React.FC = () => {
   const [masteredTopics, setMasteredTopics] = useState<string[]>([]);
 
   const subjects = [
-    { id: 'all', label: 'All Subjects', icon: '🎒', color: 'border-amber-300 bg-amber-50 text-amber-900' },
-    { id: 'english', label: 'English', icon: '📖', color: 'border-orange-300 bg-orange-50 text-orange-900' },
-    { id: 'mathematics', label: 'Mathematics', icon: '🔢', color: 'border-sky-300 bg-sky-50 text-sky-900' },
-    { id: 'science', label: 'Science', icon: '🔬', color: 'border-emerald-300 bg-emerald-50 text-emerald-900' },
-    { id: 'social-studies', label: 'Social Studies', icon: '🌍', color: 'border-indigo-300 bg-indigo-50 text-indigo-900' },
+    {
+      id: 'all',
+      label: 'All Subjects',
+      icon: '🎒',
+      activeColor: 'bg-gradient-to-r from-amber-400 to-orange-400 text-white border-amber-500 shadow-md scale-105'
+    },
+    {
+      id: 'english',
+      label: 'English',
+      icon: '📖',
+      activeColor: 'bg-gradient-to-r from-orange-400 to-rose-400 text-white border-orange-500 shadow-md scale-105'
+    },
+    {
+      id: 'mathematics',
+      label: 'Mathematics',
+      icon: '🔢',
+      activeColor: 'bg-gradient-to-r from-sky-400 to-blue-500 text-white border-blue-500 shadow-md scale-105'
+    },
+    {
+      id: 'science',
+      label: 'Science',
+      icon: '🔬',
+      activeColor: 'bg-gradient-to-r from-emerald-400 to-teal-500 text-white border-emerald-500 shadow-md scale-105'
+    },
+    {
+      id: 'social-studies',
+      label: 'Social Studies',
+      icon: '🌍',
+      activeColor: 'bg-gradient-to-r from-purple-400 to-indigo-500 text-white border-purple-500 shadow-md scale-105'
+    },
   ];
 
   const toggleAnswer = (questionId: string) => {
@@ -50,21 +75,21 @@ export const NotesPage: React.FC = () => {
     <div className="space-y-10 pb-16">
       {/* Header Banner */}
       <div className="text-center max-w-2xl mx-auto space-y-3">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-100 text-sky-900 text-xs font-semibold">
-          <BookOpen className="w-3.5 h-3.5 text-sky-700" />
-          <span>Easy Explanations, Examples & Practice</span>
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-200 border-2 border-sky-300 text-sky-950 text-xs sm:text-sm font-kids font-bold shadow-xs">
+          <BookOpen className="w-4 h-4 text-sky-700" />
+          <span>Easy Explanations, Cool Examples &amp; Practice Fun!</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-kids font-bold text-slate-900">
-          Learning Notes & Study Guides
+        <h1 className="text-4xl sm:text-5xl font-kids font-black text-slate-900 leading-tight">
+          Learning Notes &amp; Study Guides 📚
         </h1>
-        <p className="text-base text-slate-600">
+        <p className="text-base sm:text-lg text-slate-700 font-body font-semibold">
           Clear, simple school notes broken down step-by-step for English, Mathematics, Science, and Social Studies.
         </p>
       </div>
 
       {/* Subject Filter Bar */}
-      <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs space-y-4">
-        <div className="flex flex-wrap items-center gap-2">
+      <div className="bg-white/90 backdrop-blur-xs rounded-3xl p-5 border-4 border-amber-300 shadow-[0_6px_0_rgba(245,158,11,0.15)] space-y-4">
+        <div className="flex flex-wrap items-center justify-center gap-2.5">
           {subjects.map((sub) => {
             const isActive = activeSubject === sub.id;
             return (
@@ -74,13 +99,13 @@ export const NotesPage: React.FC = () => {
                   playClickPop();
                   setActiveSubject(sub.id as typeof activeSubject);
                 }}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 ${
+                className={`px-4 py-2.5 rounded-2xl text-sm font-kids font-bold transition-all flex items-center gap-2 border-2 cursor-pointer btn-bubbly ${
                   isActive
-                    ? 'bg-slate-900 text-white shadow-xs'
-                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                    ? sub.activeColor
+                    : 'bg-amber-50 border-amber-200 text-slate-700 hover:bg-amber-100 hover:text-slate-900'
                 }`}
               >
-                <span>{sub.icon}</span>
+                <span className="text-xl">{sub.icon}</span>
                 <span>{sub.label}</span>
               </button>
             );
@@ -88,36 +113,36 @@ export const NotesPage: React.FC = () => {
         </div>
 
         {/* Search inside notes */}
-        <div className="relative">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+        <div className="relative max-w-xl mx-auto">
+          <Search className="w-5 h-5 text-amber-500 absolute left-4 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search any topic, definition, or question (e.g., fractions, water cycle, verbs, maps)..."
-            className="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-hidden focus:border-sky-400 focus:bg-white transition-colors"
+            placeholder="Search any topic, question, or word (e.g. fraction, verb, water cycle, map)..."
+            className="w-full pl-12 pr-4 py-3 bg-amber-50/60 border-2 border-amber-300 rounded-2xl text-sm sm:text-base font-body font-semibold text-slate-800 placeholder-slate-400 focus:outline-hidden focus:border-amber-500 focus:bg-white transition-all shadow-inner"
           />
         </div>
       </div>
 
       {/* Notes Cards List */}
       {filteredNotes.length === 0 ? (
-        <div className="text-center py-16 bg-white rounded-3xl border border-slate-200 p-8 space-y-3">
-          <p className="text-4xl">📚</p>
-          <h3 className="text-lg font-kids font-bold text-slate-800">No notes matched your search</h3>
-          <p className="text-sm text-slate-500">Try searching for words like &quot;noun&quot;, &quot;solar&quot;, or &quot;fractions&quot;.</p>
+        <div className="text-center py-16 bg-white rounded-3xl border-4 border-amber-300 p-8 space-y-4 card-bubbly">
+          <p className="text-5xl animate-bounce">🔍</p>
+          <h3 className="text-2xl font-kids font-black text-slate-800">No notes matched your search!</h3>
+          <p className="text-base font-body text-slate-600">Try searching for &quot;noun&quot;, &quot;solar&quot;, or &quot;fractions&quot;.</p>
           <button
             onClick={() => {
               setSearchQuery('');
               setActiveSubject('all');
             }}
-            className="px-4 py-2 bg-sky-500 text-white font-semibold text-xs rounded-xl"
+            className="px-6 py-3 bg-amber-500 text-white font-kids font-bold text-sm rounded-2xl btn-bubbly cursor-pointer"
           >
-            Show All Notes
+            Show All Notes 🎒
           </button>
         </div>
       ) : (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {filteredNotes.map((topic) => {
             const isMastered = masteredTopics.includes(topic.id);
             const subjectLabel =
@@ -129,53 +154,80 @@ export const NotesPage: React.FC = () => {
                 ? 'Science'
                 : 'Social Studies';
 
-            const badgeColor =
+            const cardTheme =
               topic.subject === 'english'
-                ? 'bg-orange-100 text-orange-800'
+                ? {
+                    border: 'border-orange-300',
+                    headerBg: 'from-orange-100 to-amber-50',
+                    badge: 'bg-orange-400 text-white border-orange-500',
+                    accentText: 'text-orange-950',
+                    icon: '📖'
+                  }
                 : topic.subject === 'mathematics'
-                ? 'bg-sky-100 text-sky-800'
+                ? {
+                    border: 'border-sky-300',
+                    headerBg: 'from-sky-100 to-blue-50',
+                    badge: 'bg-sky-400 text-white border-sky-500',
+                    accentText: 'text-sky-950',
+                    icon: '🔢'
+                  }
                 : topic.subject === 'science'
-                ? 'bg-emerald-100 text-emerald-800'
-                : 'bg-indigo-100 text-indigo-800';
+                ? {
+                    border: 'border-emerald-300',
+                    headerBg: 'from-emerald-100 to-teal-50',
+                    badge: 'bg-emerald-400 text-white border-emerald-500',
+                    accentText: 'text-emerald-950',
+                    icon: '🔬'
+                  }
+                : {
+                    border: 'border-purple-300',
+                    headerBg: 'from-purple-100 to-indigo-50',
+                    badge: 'bg-purple-400 text-white border-purple-500',
+                    accentText: 'text-purple-950',
+                    icon: '🌍'
+                  };
 
             return (
               <article
                 key={topic.id}
-                className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8 space-y-6 transition-all hover:border-slate-300"
+                className={`bg-white rounded-3xl border-4 ${cardTheme.border} shadow-[0_8px_0_rgba(0,0,0,0.06)] p-6 sm:p-9 space-y-7 transition-all hover:shadow-[0_12px_0_rgba(0,0,0,0.08)]`}
               >
                 {/* Header */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+                <div className={`p-4 sm:p-5 rounded-2xl bg-gradient-to-r ${cardTheme.headerBg} border-2 border-white flex flex-col sm:flex-row sm:items-center justify-between gap-4`}>
                   <div className="space-y-1">
-                    <div className="flex items-center gap-2 text-xs">
-                      <span className={`px-2.5 py-0.5 rounded-md font-semibold ${badgeColor}`}>
-                        {subjectLabel}
+                    <div className="flex items-center gap-2 text-xs font-kids font-bold">
+                      <span className={`px-3 py-1 rounded-xl border ${cardTheme.badge} shadow-2xs`}>
+                        {cardTheme.icon} {subjectLabel}
                       </span>
-                      <span className="text-slate-500 font-medium">{topic.gradeLevel}</span>
+                      <span className="bg-white/80 px-2.5 py-1 rounded-xl text-slate-700 border border-slate-200">
+                        {topic.gradeLevel}
+                      </span>
                     </div>
-                    <h2 className="text-2xl font-kids font-bold text-slate-900 tracking-tight">
+                    <h2 className="text-2xl sm:text-3xl font-kids font-black text-slate-900 tracking-tight">
                       {topic.title}
                     </h2>
                   </div>
 
                   <button
                     onClick={() => toggleMastered(topic.id)}
-                    className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-kids font-bold transition-all self-start sm:self-auto ${
+                    className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-kids font-bold transition-all self-start sm:self-auto cursor-pointer btn-bubbly ${
                       isMastered
-                        ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
-                        : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                        ? 'bg-emerald-500 text-white border-2 border-emerald-600 shadow-xs'
+                        : 'bg-white hover:bg-slate-50 text-slate-700 border-2 border-slate-300'
                     }`}
                   >
-                    <CheckCircle2 className={`w-4 h-4 ${isMastered ? 'text-emerald-600' : 'text-slate-400'}`} />
-                    <span>{isMastered ? 'Topic Mastered! ⭐' : 'Mark as Mastered'}</span>
+                    <CheckCircle2 className={`w-4 h-4 ${isMastered ? 'text-white' : 'text-slate-400'}`} />
+                    <span>{isMastered ? 'Mastered! ⭐' : 'Mark as Mastered'}</span>
                   </button>
                 </div>
 
                 {/* Simple Explanation */}
                 <div className="space-y-3">
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500">
-                    📖 Simple Explanation
+                  <h3 className="text-base font-kids font-bold uppercase tracking-wider text-slate-600 flex items-center gap-2">
+                    <span>💡</span>
+                    <span>Simple Explanation</span>
                   </h3>
-                  <div className="space-y-2 text-sm sm:text-base text-slate-700 leading-relaxed">
+                  <div className="space-y-2.5 text-base sm:text-lg font-body font-semibold text-slate-800 leading-relaxed bg-amber-50/40 p-5 rounded-2xl border-2 border-amber-200/80">
                     {topic.explanation.map((para, i) => (
                       <p key={i}>{para}</p>
                     ))}
@@ -183,12 +235,12 @@ export const NotesPage: React.FC = () => {
                 </div>
 
                 {/* Real-Life Examples Box */}
-                <div className="rounded-2xl bg-amber-50/70 border border-amber-200 p-5 space-y-2.5">
-                  <div className="flex items-center gap-2 text-amber-900 font-kids font-bold text-sm">
-                    <Sparkles className="w-4 h-4 text-amber-600" />
+                <div className="rounded-2xl bg-gradient-to-r from-amber-100 to-orange-100 border-3 border-amber-300 p-5 space-y-3 shadow-2xs">
+                  <div className="flex items-center gap-2 text-amber-950 font-kids font-bold text-base sm:text-lg">
+                    <Sparkles className="w-5 h-5 text-amber-600" />
                     <span>Real-Life Examples</span>
                   </div>
-                  <ul className="space-y-1.5 text-xs sm:text-sm text-amber-950 list-disc list-inside">
+                  <ul className="space-y-2 text-sm sm:text-base font-body font-semibold text-amber-950 list-disc list-inside">
                     {topic.examples.map((ex, i) => (
                       <li key={i} className="leading-relaxed">
                         {ex}
@@ -198,12 +250,12 @@ export const NotesPage: React.FC = () => {
                 </div>
 
                 {/* Important Points to Remember */}
-                <div className="rounded-2xl bg-indigo-50/60 border border-indigo-200 p-5 space-y-2.5">
-                  <div className="flex items-center gap-2 text-indigo-900 font-kids font-bold text-sm">
-                    <Star className="w-4 h-4 text-indigo-600" />
-                    <span>Important Points to Remember</span>
+                <div className="rounded-2xl bg-gradient-to-r from-purple-100 to-indigo-100 border-3 border-purple-300 p-5 space-y-3 shadow-2xs">
+                  <div className="flex items-center gap-2 text-purple-950 font-kids font-bold text-base sm:text-lg">
+                    <Star className="w-5 h-5 text-purple-600" />
+                    <span>Important Points to Remember! ⭐</span>
                   </div>
-                  <ul className="space-y-1.5 text-xs sm:text-sm text-indigo-950 list-disc list-inside">
+                  <ul className="space-y-2 text-sm sm:text-base font-body font-semibold text-purple-950 list-disc list-inside">
                     {topic.importantPoints.map((pt, i) => (
                       <li key={i} className="leading-relaxed">
                         {pt}
@@ -214,43 +266,43 @@ export const NotesPage: React.FC = () => {
 
                 {/* Practice Questions */}
                 <div className="space-y-4 pt-2">
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500 flex items-center gap-2">
-                    <HelpCircle className="w-4 h-4 text-slate-400" />
+                  <h3 className="text-base font-kids font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
+                    <HelpCircle className="w-5 h-5 text-amber-500" />
                     <span>✏️ Practice Questions (Try Yourself!)</span>
                   </h3>
 
-                  <div className="space-y-3">
+                  <div className="space-y-3.5">
                     {topic.practiceQuestions.map((q, idx) => {
                       const isRevealed = !!revealedAnswers[q.id];
                       return (
                         <div
                           key={q.id}
-                          className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 space-y-3"
+                          className="rounded-2xl border-2 border-slate-200 bg-white p-4 sm:p-5 space-y-3 shadow-2xs"
                         >
                           <div className="flex items-start justify-between gap-4">
-                            <p className="text-sm font-semibold text-slate-800">
-                              <span className="text-slate-400 mr-1.5 font-bold">Q{idx + 1}.</span>
+                            <p className="text-base font-kids font-bold text-slate-800">
+                              <span className="text-amber-600 mr-2 font-black">Q{idx + 1}.</span>
                               {q.question}
                             </p>
                             <button
                               onClick={() => toggleAnswer(q.id)}
-                              className="px-3 py-1.5 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 transition-colors flex items-center gap-1.5 shrink-0 shadow-2xs"
+                              className="px-4 py-2 bg-gradient-to-r from-amber-400 to-orange-400 hover:from-amber-500 hover:to-orange-500 text-white rounded-xl text-xs sm:text-sm font-kids font-bold transition-all flex items-center gap-1.5 shrink-0 btn-bubbly cursor-pointer border border-amber-600/30"
                             >
                               <span>{isRevealed ? 'Hide Answer' : 'Show Answer'}</span>
                               {isRevealed ? (
-                                <ChevronUp className="w-3.5 h-3.5" />
+                                <ChevronUp className="w-4 h-4" />
                               ) : (
-                                <ChevronDown className="w-3.5 h-3.5" />
+                                <ChevronDown className="w-4 h-4" />
                               )}
                             </button>
                           </div>
 
                           {isRevealed && (
-                            <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs sm:text-sm text-emerald-950 space-y-1 animate-fadeIn">
-                              <p className="font-bold text-emerald-800">
-                                Answer: {q.answer}
+                            <div className="p-4 rounded-xl bg-emerald-100 border-2 border-emerald-300 text-emerald-950 space-y-1.5 animate-fadeIn">
+                              <p className="font-kids font-bold text-base text-emerald-900">
+                                ✅ Answer: {q.answer}
                               </p>
-                              <p className="text-emerald-900/80">
+                              <p className="font-body font-semibold text-sm sm:text-base text-emerald-900/90">
                                 💡 {q.explanation}
                               </p>
                             </div>
